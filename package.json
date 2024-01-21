@@ -1,0 +1,25 @@
+{
+  "name": "energia-backend",
+  "version": "1.0.0",
+  "description": "It's workout logger webapp",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pesto-students/backend-repo-code-kings.git"
+  },
+  "author": "Arpit and Asad",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pesto-students/backend-repo-code-kings/issues"
+  },
+  "homepage": "https://github.com/pesto-students/backend-repo-code-kings#readme",
+  "dependencies": {
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "mongodb": "^6.3.0",
+    "mongoose": "^8.1.0"
+  }
+}
