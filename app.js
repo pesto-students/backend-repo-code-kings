@@ -10,7 +10,7 @@ app.use(express.json());
 connectDB();
 
 // Use Routes
-app.use("/api", routes);
+// app.use("/api", routes);
 
 // Start the server
 app.listen(PORT, () => {
