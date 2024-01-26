@@ -1,18 +1,9 @@
 const express = require("express");
-const connectDB = require("./src/db/database");
 const app = express();
-const PORT = process.env.PORT || 3000;
-
-// Middleware
+const AppError = require("./utils/appError");
 app.use(express.json());
 
-// Connect to MongoDB Atlas
-connectDB();
-
-// Use Routes
-// app.use("/api", routes);
-
-// Start the server
-app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
+app.all("*", (req, res, next) => {
+  next(new AppError(`This route is not available ${req.originalUrl}!`, 404));
 });
+module.exports = app;
