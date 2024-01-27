@@ -38,3 +38,36 @@ exports.signIn = catchAsync(async (req, res, next) => {
     token,
   });
 });
+
+exports.protect = catchAsync(async (req, res, next) => {
+  let token;
+  if (
+    req.headers.authorization &&
+    req.headers.authorization.startsWith("Bearer")
+  ) {
+    token = req.headers.authorization.split(" ")[1];
+  }
+  if (!token) {
+    return next(new AppError("Please login", 403));
+  }
+  const decoded = jwt.verify(token, process.env.JWT_SECRET);
+  if (!decoded) {
+    return next(new AppError("This is not a valid token!", 403));
+  }
+  const id = decoded?.id;
+  console.log(decoded);
+  const user = await User.findById(id);
+  if (!user) {
+    return next(new AppError("User for this token no longer exists", 404));
+  }
+  if (user.checkPasswordChangedBefore(decoded.iat)) {
+    return next(
+      new AppError(
+        "The user has changed password since the token has issued!",
+        403
+      )
+    );
+  }
+  req.user = user;
+  next();
+});

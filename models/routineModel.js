@@ -9,5 +9,18 @@ const routineSchema = new mongoose.Schema({
   user: {
     type: mongoose.Schema.ObjectId,
     ref: "User",
+    required: [true, "A routine must belong to a user!"],
   },
 });
+
+// routineSchema.pre(/^find/, function (next) {
+//   this.populate({
+//     path: "user",
+//     select: "name email",
+//   });
+//   next();
+// });
+
+const Routine = mongoose.model("Routine", routineSchema);
+
+module.exports = Routine;
