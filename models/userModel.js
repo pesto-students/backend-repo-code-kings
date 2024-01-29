@@ -33,6 +33,11 @@ const userSchema = new mongoose.Schema({
     default: "user",
   },
   passwordChangedAt: Date,
+  active: {
+    type: Boolean,
+    default: true,
+    select: false,
+  },
 });
 
 // DOCUMENT MIDDLEWARE
@@ -43,6 +48,10 @@ userSchema.pre("save", async function (next) {
   this.passwordChangedAt = Date.now();
   this.password = await bcrypt.hash(this.password, 12);
   this.passwordConfirm = undefined;
+});
+userSchema.pre(/^find/, function (next) {
+  this.find({ active: true });
+  next();
 });
 // INSTANCE METHODS
 userSchema.methods.correctPassword = async function (

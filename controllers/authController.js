@@ -29,13 +29,7 @@ exports.signUp = catchAsync(async (req, res) => {
     password: req.body.password,
     passwordConfirm: req.body.passwordConfirm,
   });
-  res.status(201).json({
-    status: "success",
-    message: "user created successfully",
-    data: {
-      newUser,
-    },
-  });
+  createSendToken(newUser, 201, res);
 });
 
 exports.signIn = catchAsync(async (req, res, next) => {
@@ -58,7 +52,8 @@ exports.protect = catchAsync(async (req, res, next) => {
   ) {
     token = req.headers.authorization.split(" ")[1];
   }
-  if (!token) {
+  console.log(typeof token, "KAK");
+  if (!token || token == "null") {
     return next(new AppError("Please login!", 401));
   }
   const decoded = await jwt.verify(token, process.env.JWT_SECRET);
