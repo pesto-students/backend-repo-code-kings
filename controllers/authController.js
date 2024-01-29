@@ -69,5 +69,6 @@ exports.protect = catchAsync(async (req, res, next) => {
     );
   }
   req.user = user;
+  console.log(user, "KAKAK");
   next();
 });

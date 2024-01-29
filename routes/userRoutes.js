@@ -6,7 +6,10 @@ const routineRouter = require("../routes/routineRoutes");
 router.route("/signup").post(authController.signUp);
 router.route("/signin").post(authController.signIn);
 
-router.route("/:id").get(authController.protect, userController.getUser);
+router
+  .route("/:id")
+  .get(authController.protect, userController.getUser)
+  .delete(authController.protect, userController.deleteUser);
 
 router.use("/:id/routines", routineRouter);
 

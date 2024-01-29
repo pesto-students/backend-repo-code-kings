@@ -5,11 +5,7 @@ exports.getAllRoutines = catchAsync(async (req, res, next) => {
   if (req.params.id) {
     filter = { user: req.params.id };
   }
-  console.log(filter, "KAKAMAMA");
-  const routines = await Routine.find(filter).populate({
-    path: "user",
-    select: "name",
-  });
+  const routines = await Routine.find(filter).populate("excercises");
   res.status(200).json({
     status: "success",
     data: {
@@ -19,7 +15,6 @@ exports.getAllRoutines = catchAsync(async (req, res, next) => {
 });
 
 exports.createRoutine = catchAsync(async (req, res, next) => {
-  console.log("KAKA");
   if (!req.body.user) {
     req.body.user = req.params.id;
   }
