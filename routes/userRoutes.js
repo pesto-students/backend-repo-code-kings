@@ -6,5 +6,11 @@ const userController = require("../controllers/userController");
 router.route("/signup").post(authController.signUp);
 router.route("/signin").post(authController.signIn);
 // USER ROUTES
-router.route("/").get(userController.getAllUsers);
+router
+  .route("/")
+  .get(
+    authController.protect,
+    authController.restrictTo("admin"),
+    userController.getAllUsers
+  );
 module.exports = router;
