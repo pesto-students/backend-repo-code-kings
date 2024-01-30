@@ -1,6 +1,6 @@
 const catchAsync = require("../utils/catchAsync");
 const User = require("../models/userModel");
-
+const factory = require("../controllers/handlerFactory");
 const filterObj = (obj, ...allowedFields) => {
   const newObj = {};
   Object.keys(obj).forEach((el) => {
@@ -9,15 +9,7 @@ const filterObj = (obj, ...allowedFields) => {
   return newObj;
 };
 
-exports.getAllUsers = catchAsync(async (req, res, next) => {
-  const users = await User.find().populate("routines");
-  res.status(200).json({
-    status: 200,
-    data: {
-      users,
-    },
-  });
-});
+exports.getAllUsers = factory.getAll(User, "routines");
 
 exports.updateMe = catchAsync(async (req, res, next) => {
   if (req.body.password || req.body.passwordConfirm) {

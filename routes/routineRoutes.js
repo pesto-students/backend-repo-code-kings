@@ -3,7 +3,6 @@ const router = express.Router();
 const authController = require("../controllers/authController");
 const routineController = require("../controllers/routineController");
 const factory = require("../controllers/handlerFactory");
-
 router.use(authController.protect);
 router.use(factory.authorize);
 router
