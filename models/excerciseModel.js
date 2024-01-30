@@ -13,6 +13,10 @@ const excerciseSchema = new mongoose.Schema({
     type: Number,
     default: 0,
   },
+  weight: {
+    type: Number,
+    default: 0,
+  },
   routine: {
     type: mongoose.Schema.ObjectId,
     ref: "Routine",
