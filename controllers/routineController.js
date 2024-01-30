@@ -1,12 +1,5 @@
 const Routine = require("../models/routineModel");
 const catchAsync = require("../utils/catchAsync");
+const factory = require("./handlerFactory");
 
-exports.getAllRoutines = catchAsync(async (req, res, next) => {
-  const routines = await Routine.find();
-  res.status(200).json({
-    status: "success",
-    data: {
-      routines,
-    },
-  });
-});
+exports.getAllRoutines = factory.getAll(Routine);

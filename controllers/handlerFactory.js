@@ -1,12 +1,14 @@
 const catchAsync = require("../utils/catchAsync");
 const AppError = require("../utils/appError");
+const { query } = require("express");
 
 exports.deleteOne = (Model) =>
   catchAsync(async (req, res, next) => {
-    const doc = await Model.deleteOne({
-      _id: req.params.id,
-      user: req.user.id,
-    });
+    let queryObj =
+      req.user.role === "admin"
+        ? { _id: req.params.id }
+        : { _id: req.params.id, user: req.user.id };
+    const doc = await Model.deleteOne(queryObj);
 
     if (!doc) {
       return next(new AppError("No document found with that ID", 404));
@@ -20,14 +22,14 @@ exports.deleteOne = (Model) =>
 
 exports.updateOne = (Model) =>
   catchAsync(async (req, res, next) => {
-    const doc = await Model.findOneAndUpdate(
-      { _id: req.params.id, user: req.user.id },
-      req.body,
-      {
-        new: true,
-        runValidators: true,
-      }
-    );
+    let queryObj =
+      req.user.role === "admin"
+        ? { _id: req.params.id }
+        : { _id: req.params.id, user: req.user.id };
+    const doc = await Model.findOneAndUpdate(queryObj, req.body, {
+      new: true,
+      runValidators: true,
+    });
 
     if (!doc) {
       return next(new AppError("No document found with that ID", 404));
@@ -55,10 +57,15 @@ exports.createOne = (Model) =>
 
 exports.getOne = (Model, popOptions) =>
   catchAsync(async (req, res, next) => {
-    let query = Model.findOne({
-      _id: req.params.id,
-      user: req.user.id,
-    });
+    let queryObj =
+      req.user.role === "admin"
+        ? { _id: req.params.id }
+        : {
+            _id: req.params.id,
+            user: req.user.id,
+          };
+
+    let query = Model.findOne(queryObj);
 
     if (popOptions) query = query.populate(popOptions);
     const doc = await query;
@@ -78,7 +85,8 @@ exports.getOne = (Model, popOptions) =>
 exports.getAll = (Model) =>
   catchAsync(async (req, res, next) => {
     // To allow for nested GET reviews on tour (hack)
-    const doc = await Model.find({ user: req.user.id });
+    let queryObj = req.user.role === "admin" ? {} : { user: req.user.id };
+    const doc = await Model.find(queryObj);
     // SEND RESPONSE
     res.status(200).json({
       status: "success",
