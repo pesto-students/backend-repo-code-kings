@@ -29,6 +29,11 @@ router
     userController.setUserId,
     userController.createRoutine
   );
+router
+  .route("/routines/:id")
+  .get(authController.protect, userController.getUserRoutine)
+  .delete(authController.protect, userController.deleteRoutine)
+  .patch(authController.protect, userController.udpateRoutine);
 // USER SPECIFIC ROUTINE ROUTES
 // router.use("/:userId/routines", routineRouter);
 module.exports = router;
