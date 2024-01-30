@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const authController = require("../controllers/authController");
 const userController = require("../controllers/userController");
+// const routineRouter = require("../routes/routineRoutes");
 // AUTH ROUTES
 router.route("/signup").post(authController.signUp);
 router.route("/signin").post(authController.signIn);
@@ -18,4 +19,6 @@ router
   );
 router.patch("/updateMe", authController.protect, userController.updateMe);
 router.delete("/deleteMe", authController.protect, userController.deleteMe);
+// USER SPECIFIC ROUTINE ROUTES
+// router.use("/:userId/routines", routineRouter);
 module.exports = router;
