@@ -1,5 +1,5 @@
 const express = require("express");
-const router = express.Router();
+const router = express.Router({ mergeParams: true });
 const routineController = require("../controllers/routineController");
 const authController = require("../controllers/authController");
 
@@ -9,12 +9,6 @@ router
     authController.protect,
     authController.restrictTo("admin"),
     routineController.getAllRoutines
-  )
-  .post(
-    authController.protect,
-    authController.restrictTo("user"),
-    routineController.setUserId,
-    routineController.createRoutine
   );
 
 module.exports = router;

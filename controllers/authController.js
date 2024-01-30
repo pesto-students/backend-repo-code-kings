@@ -62,7 +62,6 @@ exports.protect = catchAsync(async (req, res, next) => {
   ) {
     token = req.headers.authorization.split(" ")[1];
   }
-  console.log(typeof token, "KAK");
   if (!token || token == "null") {
     return next(new AppError("Please login!", 401));
   }

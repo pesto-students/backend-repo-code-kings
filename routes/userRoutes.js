@@ -19,6 +19,16 @@ router
   );
 router.patch("/updateMe", authController.protect, userController.updateMe);
 router.delete("/deleteMe", authController.protect, userController.deleteMe);
+// USER ROUTINES ROUTES
+router
+  .route("/routines")
+  .get(authController.protect, userController.getUserRoutines)
+  .post(
+    authController.protect,
+    authController.restrictTo("user"),
+    userController.setUserId,
+    userController.createRoutine
+  );
 // USER SPECIFIC ROUTINE ROUTES
 // router.use("/:userId/routines", routineRouter);
 module.exports = router;
