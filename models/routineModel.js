@@ -18,14 +18,12 @@ const routineSchema = new mongoose.Schema(
     toObject: { virtuals: true },
   }
 );
+routineSchema.virtual("excercises", {
+  ref: "Excercise",
+  foreignField: "routine",
+  localField: "_id",
+});
 
-// routineSchema.pre(/^find/, function (next) {
-//   this.populate({
-//     path: "user",
-//     select: "name",
-//   });
-//   next();
-// });
 const Routine = mongoose.model("Routine", routineSchema);
 
 module.exports = Routine;
