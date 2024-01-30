@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const authController = require("../controllers/authController");
 const userController = require("../controllers/userController");
-// const routineRouter = require("../routes/routineRoutes");
+const routineRouter = require("../routes/routineRoutes");
 // AUTH ROUTES
 router.route("/signup").post(authController.signUp);
 router.route("/signin").post(authController.signIn);
@@ -20,19 +20,20 @@ router
 router.patch("/updateMe", authController.protect, userController.updateMe);
 router.delete("/deleteMe", authController.protect, userController.deleteMe);
 // USER ROUTINES ROUTES
-router
-  .route("/routines")
-  .get(authController.protect, userController.getUserRoutines)
-  .post(
-    authController.protect,
-    authController.restrictTo("user"),
-    userController.setUserId,
-    userController.createRoutine
-  );
-router
-  .route("/routines/:id")
-  .get(authController.protect, userController.getUserRoutine)
-  .delete(authController.protect, userController.deleteRoutine)
-  .patch(authController.protect, userController.udpateRoutine);
+// router.use("/routines", routineRouter);
+// router
+//   .route("/routines")
+//   .get(authController.protect, userController.getUserRoutines)
+//   .post(
+//     authController.protect,
+//     authController.restrictTo("user"),
+//     userController.setUserId,
+//     userController.createRoutine
+//   );
+// router
+//   .route("/routines/:id")
+//   .get(authController.protect, userController.getUserRoutine)
+//   .delete(authController.protect, userController.deleteRoutine)
+//   .patch(authController.protect, userController.udpateRoutine);
 
 module.exports = router;
