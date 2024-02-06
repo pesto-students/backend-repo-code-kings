@@ -104,3 +104,15 @@ exports.updatePassword = catchAsync(async (req, res, next) => {
   await user.save();
   createSendToken(user, 200, res);
 });
+
+exports.forgotPassword = catchAsync(async (req, res, next) => {
+  const { email, password, passwordConfirm } = req.body;
+  const user = await User.findOne({ email: email });
+
+  if (!user) throw new AppError("User Not Found", 404);
+
+  user.password = password;
+  user.passwordConfirm = passwordConfirm;
+  await user.save();
+  createSendToken(user, 200, res);
+});
