@@ -17,6 +17,8 @@ const limiter = rateLimit({
   message: "Too many requests from this IP, please try again in an hour!",
 });
 app.use("/api/", limiter);
+const cors = require("cors");
+app.use(cors({ credentials: true, origin: "http://localhost:3001" }));
 // HELMET
 app.use(helmet());
 // BODY PARSER
