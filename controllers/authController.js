@@ -17,7 +17,7 @@ const createSendToken = (user, statusCode, res) => {
     expires: new Date(
       Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000
     ),
-    httpOnly: true,
+    // httpOnly: true,
   };
   // SETTING SECURE CONDITION
   if (process.env.NODE_ENV === "PRODUCTION") cookieOptions.secure = true;
@@ -116,3 +116,11 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
   await user.save();
   createSendToken(user, 200, res);
 });
+
+exports.logout = (req, res) => {
+  res.cookie("jwt", "loggedout", {
+    expires: new Date(Date.now() + 10 * 1000),
+    httpOnly: true,
+  });
+  res.status(200).json({ status: "success" });
+};
