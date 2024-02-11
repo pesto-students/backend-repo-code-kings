@@ -28,6 +28,18 @@ const userSchema = new mongoose.Schema(
       },
       message: "Enter same function as password!",
     },
+    Description: {
+      type: String,
+      required: false,
+    },
+    gender: {
+      type: String,
+      required: false,
+    },
+    dateOfBirth: {
+      type: Date,
+      required: false,
+    },
     role: {
       type: String,
       enum: ["user", "admin"],
@@ -51,6 +63,12 @@ userSchema.virtual("routines", {
   localField: "_id",
   foreignField: "user",
 });
+userSchema.virtual("workoutRecords", {
+  ref: "WorkoutRecord",
+  localField: "_id",
+  foreignField: "user",
+});
+
 // DOCUMENT MIDDLEWARE
 userSchema.pre("save", async function (next) {
   if (!this.isModified("password")) {
