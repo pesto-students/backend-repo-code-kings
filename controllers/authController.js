@@ -37,7 +37,7 @@ exports.signUp = catchAsync(async (req, res) => {
     name: req.body.name,
     email: req.body.email,
     password: req.body.password,
-    passwordConfirm: req.body.passwordConfirm,
+    confirmPassword: req.body.confirmPassword,
   });
   createSendToken(newUser, 201, res);
 });
@@ -94,25 +94,25 @@ exports.restrictTo = (...roles) => {
 };
 
 exports.updatePassword = catchAsync(async (req, res, next) => {
-  const { passwordCurrent, passwordConfirm, password } = req.body;
+  const { passwordCurrent, confirmPassword, password } = req.body;
   const user = await User.findById(req.user.id).select("+password");
   if (!(await user.correctPassword(passwordCurrent, user.password))) {
     return next(new AppError("Please enter correct password!", 403));
   }
   user.password = password;
-  user.passwordConfirm = passwordConfirm;
+  user.confirmPassword = confirmPassword;
   await user.save();
   createSendToken(user, 200, res);
 });
 
 exports.forgotPassword = catchAsync(async (req, res, next) => {
-  const { email, password, passwordConfirm } = req.body;
+  const { email, password, confirmPassword } = req.body;
   const user = await User.findOne({ email: email });
 
   if (!user) throw new AppError("User Not Found", 404);
 
   user.password = password;
-  user.passwordConfirm = passwordConfirm;
+  user.confirmPassword = confirmPassword;
   await user.save();
   createSendToken(user, 200, res);
 });

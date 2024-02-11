@@ -20,7 +20,7 @@ const userSchema = new mongoose.Schema(
       required: [true, "A password is required!"],
       select: false,
     },
-    passwordConfirm: {
+    confirmPassword: {
       type: String,
       required: [true, "A password confirm is required!"],
       validate: function (el) {
@@ -58,7 +58,7 @@ userSchema.pre("save", async function (next) {
   }
   this.passwordChangedAt = Date.now();
   this.password = await bcrypt.hash(this.password, 12);
-  this.passwordConfirm = undefined;
+  this.confirmPassword = undefined;
 });
 userSchema.pre(/^find/, function (next) {
   this.find({ active: true });

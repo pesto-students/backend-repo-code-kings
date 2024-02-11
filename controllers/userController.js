@@ -20,7 +20,7 @@ exports.updateUser = factory.updateOne(User);
 exports.deleteUser = factory.deleteOne(User);
 
 exports.updateMe = catchAsync(async (req, res, next) => {
-  if (req.body.password || req.body.passwordConfirm) {
+  if (req.body.password || req.body.confirmPassword) {
     return next(
       new AppError(
         "This route is not for password updates. Please use /updateMyPassword.",
