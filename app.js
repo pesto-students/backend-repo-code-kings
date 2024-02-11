@@ -9,6 +9,7 @@ const AppError = require("./utils/appError");
 const userRouter = require("./routes/userRoutes");
 const routineRouter = require("./routes/routineRoutes");
 const exerciseRouter = require("./routes/exerciseRoutes");
+const workoutRecordRouter = require("./routes/workoutRecordRoutes");
 const globalErrorController = require("./controllers/errorController");
 // ADD LIMITER
 const limiter = rateLimit({
@@ -33,6 +34,7 @@ app.use(hpp());
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/routines", routineRouter);
 app.use("/api/v1/exercises", exerciseRouter);
+app.use("/api/v1/workoutRecords", workoutRecordRouter);
 // UNDEFINED ROUTES HANDLER
 app.all("*", (req, res, next) => {
   next(new AppError(`This route is not available ${req.originalUrl}!`, 404));
