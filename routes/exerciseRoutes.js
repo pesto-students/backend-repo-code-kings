@@ -1,32 +1,32 @@
 const express = require("express");
 const router = express.Router({ mergeParams: true });
 const authController = require("../controllers/authController");
-const excerciseController = require("../controllers/excerciseController");
+const exerciseController = require("../controllers/exerciseController");
 const factory = require("../controllers/handlerFactory");
 router
   .route("/")
   .post(
     authController.protect,
-    excerciseController.setExcerciseRoutineIds,
+    exerciseController.setExerciseRoutineIds,
     authController.restrictTo("user"),
-    excerciseController.createExcercise
+    exerciseController.createExercise
   );
 router
   .route("/:id")
   .patch(
     authController.protect,
     factory.authorize,
-    excerciseController.updateExcercise
+    exerciseController.updateExercise
   )
   .get(
     authController.protect,
     factory.authorize,
-    excerciseController.getExcercise
+    exerciseController.getExercise
   )
   .delete(
     authController.protect,
     factory.authorize,
-    excerciseController.deleteExcercise
+    exerciseController.deleteExercise
   );
 
 module.exports = router;

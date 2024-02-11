@@ -18,8 +18,8 @@ const routineSchema = new mongoose.Schema(
     toObject: { virtuals: true },
   }
 );
-routineSchema.virtual("excercises", {
-  ref: "Excercise",
+routineSchema.virtual("exercises", {
+  ref: "Exercise",
   foreignField: "routine",
   localField: "_id",
 });

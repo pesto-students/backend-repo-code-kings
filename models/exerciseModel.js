@@ -1,9 +1,9 @@
 const mongoose = require("mongoose");
 
-const excerciseSchema = new mongoose.Schema({
+const exerciseSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: [true, "A excercise must have a name!"],
+    required: [true, "A exercise must have a name!"],
   },
   sets: {
     type: Number,
@@ -20,15 +20,15 @@ const excerciseSchema = new mongoose.Schema({
   routine: {
     type: mongoose.Schema.ObjectId,
     ref: "Routine",
-    required: [true, "An excercise must belong to a routine!"],
+    required: [true, "An exercise must belong to a routine!"],
   },
   user: {
     type: mongoose.Schema.ObjectId,
     ref: "User",
-    required: [true, "An excercise must belong to a user!"],
+    required: [true, "An exercise must belong to a user!"],
   },
 });
 
-const Excercise = mongoose.model("Excercise", excerciseSchema);
+const Exercise = mongoose.model("Exercise", exerciseSchema);
 
-module.exports = Excercise;
+module.exports = Exercise;
