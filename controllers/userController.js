@@ -1,6 +1,7 @@
 const catchAsync = require("../utils/catchAsync");
 const User = require("../models/userModel");
 const factory = require("../controllers/handlerFactory");
+
 const filterObj = (obj, ...allowedFields) => {
   const newObj = {};
   Object.keys(obj).forEach((el) => {
@@ -29,7 +30,14 @@ exports.updateMe = catchAsync(async (req, res, next) => {
     );
   }
 
-  const filteredBody = filterObj(req.body, "name", "email");
+  const filteredBody = filterObj(
+    req.body,
+    "name",
+    "email",
+    "description",
+    "gender",
+    "dateOfBirth"
+  );
 
   const updatedUser = await User.findByIdAndUpdate(req.user.id, filteredBody, {
     new: true,
