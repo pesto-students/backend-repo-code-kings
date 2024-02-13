@@ -28,17 +28,17 @@ const userSchema = new mongoose.Schema(
       },
       message: "Enter same function as password!",
     },
+    image: {
+      type: String, // cloudinary url
+    },
     Description: {
       type: String,
-      required: false,
     },
     gender: {
       type: String,
-      required: false,
     },
     dateOfBirth: {
       type: Date,
-      required: false,
     },
     role: {
       type: String,

@@ -2,6 +2,20 @@ const express = require("express");
 const router = express.Router();
 const authController = require("../controllers/authController");
 const userController = require("../controllers/userController");
+
+const multer = require("multer");
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "uploads/");
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.originalname);
+  },
+});
+
+const upload = multer({ storage: storage });
+
 // AUTH ROUTES
 router.route("/signup").post(authController.signUp);
 router.route("/signin").post(authController.signIn);
@@ -13,7 +27,7 @@ router.get("/me", userController.getMe, userController.getUser);
 
 // USER ROUTES
 
-router.patch("/updateMe", userController.updateMe);
+router.patch("/updateMe", upload.single("file"), userController.updateMe);
 router.delete("/deleteMe", userController.deleteMe);
 
 router.use(authController.restrictTo("admin"));

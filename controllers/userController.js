@@ -1,6 +1,7 @@
 const catchAsync = require("../utils/catchAsync");
 const User = require("../models/userModel");
 const factory = require("../controllers/handlerFactory");
+const { uploadOnCloudinary } = require("../utils/cloudinary");
 
 const filterObj = (obj, ...allowedFields) => {
   const newObj = {};
@@ -30,6 +31,10 @@ exports.updateMe = catchAsync(async (req, res, next) => {
     );
   }
 
+  const avatarLocalPath = req.file.path;
+
+  const avatar = await uploadOnCloudinary(avatarLocalPath);
+
   const filteredBody = filterObj(
     req.body,
     "name",
@@ -38,6 +43,7 @@ exports.updateMe = catchAsync(async (req, res, next) => {
     "gender",
     "dateOfBirth"
   );
+  filteredBody.image = avatar;
 
   const updatedUser = await User.findByIdAndUpdate(req.user.id, filteredBody, {
     new: true,
