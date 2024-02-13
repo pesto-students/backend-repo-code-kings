@@ -78,9 +78,13 @@ exports.getOne = (Model, popOptions) =>
   });
 
 // Get all documents
-exports.getAll = (Model) =>
+exports.getAll = (Model, popOptions) =>
   catchAsync(async (req, res, next) => {
-    const doc = await Model.find(req.queryObj);
+    let query = Model.find(req.queryObj);
+
+    if (popOptions) query = query.populate(popOptions);
+
+    const doc = await query;
 
     res.status(200).json({
       status: "success",

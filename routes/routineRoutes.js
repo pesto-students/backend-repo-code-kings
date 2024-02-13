@@ -18,7 +18,7 @@ router
   .route("/:id")
   .get(routineController.getUserRoutine)
   .delete(routineController.deleteRoutine)
-  .patch(routineController.udpateRoutine);
+  .patch(routineController.updateRoutine);
 
 router.use("/:routineId/exercises", exerciseRouter);
 module.exports = router;

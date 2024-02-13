@@ -5,8 +5,8 @@ exports.setUserId = (req, res, next) => {
   next();
 };
 
-exports.getUserRoutines = factory.getAll(Routine);
+exports.getUserRoutines = factory.getAll(Routine, "exercises");
 exports.getUserRoutine = factory.getOne(Routine, "exercises");
 exports.createRoutine = factory.createOne(Routine);
 exports.deleteRoutine = factory.deleteOne(Routine);
-exports.udpateRoutine = factory.updateOne(Routine);
+exports.updateRoutine = factory.updateOne(Routine);
