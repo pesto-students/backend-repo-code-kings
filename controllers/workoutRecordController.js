@@ -10,7 +10,17 @@ exports.setUserIdAndName = (req, res, next) => {
 };
 
 exports.getUserWorkoutRecords = catchAsync(async (req, res, next) => {
-  const records = await WorkoutRecord.find({ userId: req.user.id });
+  const records = await WorkoutRecord.find({ userId: req.user.id }).populate(
+    "routine"
+  );
+  for (let i = 0; i < records.length; i++) {
+    const routine = await Routine.findOne({
+      _id: records[i].routineId,
+    }).populate("exercises");
+
+    // Assign exercises to the record
+    records[i].exercises = routine.exercises;
+  }
 
   res.status(200).json({
     status: "success",
@@ -22,9 +32,7 @@ exports.getUserWorkoutRecords = catchAsync(async (req, res, next) => {
 });
 
 exports.getUserWorkoutRecord = catchAsync(async (req, res, next) => {
-  let query = WorkoutRecord.findOne({ _id: req.params.id });
-
-  query = query.populate("routine");
+  let query = WorkoutRecord.findOne({ _id: req.params.id }).populate("routine");
 
   let doc = await query;
 
