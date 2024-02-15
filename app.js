@@ -20,11 +20,10 @@ const limiter = rateLimit({
 app.use("/api/", limiter);
 const cors = require("cors");
 app.use(
-  cors()
-  //   {
-  //   credentials: true,
-  //   origin: ["http://localhost:3001", "https://energia-app.vercel.app/"],
-  // }
+  cors({
+    credentials: true,
+    origin: ["http://localhost:3001", "https://energia-app.vercel.app/"],
+  })
 );
 // HELMET
 app.use(helmet());
