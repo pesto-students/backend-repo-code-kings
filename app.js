@@ -20,6 +20,7 @@ const limiter = rateLimit({
 app.use("/api/", limiter);
 const cors = require("cors");
 app.use(cors());
+app.enable("trust proxy");
 // HELMET
 app.use(helmet());
 // BODY PARSER
