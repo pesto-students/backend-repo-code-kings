@@ -30,7 +30,8 @@ exports.updateMe = catchAsync(async (req, res, next) => {
       )
     );
   }
-
+  console.log(req.file);
+  console.log(req.body);
   const avatarLocalPath = req.file.path;
 
   const avatar = await uploadOnCloudinary(avatarLocalPath);
