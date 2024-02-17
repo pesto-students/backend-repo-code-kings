@@ -34,7 +34,7 @@ exports.updateMe = catchAsync(async (req, res, next) => {
   const avatarLocalPath = req.body.file;
 
   const avatar = await uploadOnCloudinary(avatarLocalPath);
-
+  console.log(avatar);
   const filteredBody = filterObj(
     req.body,
     "name",
@@ -43,7 +43,7 @@ exports.updateMe = catchAsync(async (req, res, next) => {
     "gender",
     "dateOfBirth"
   );
-  filteredBody.image = avatar;
+  filteredBody.image = avatar.url;
 
   const updatedUser = await User.findByIdAndUpdate(req.user.id, filteredBody, {
     new: true,
