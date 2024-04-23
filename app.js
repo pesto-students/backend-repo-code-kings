@@ -19,7 +19,9 @@ const limiter = rateLimit({
 });
 app.use("/api/", limiter);
 const cors = require("cors");
-app.use(cors());
+app.use(
+  cors({ origin: ["http://localhost:3001", "https://energia-app.vercel.app/"] })
+);
 app.enable("trust proxy");
 // HELMET
 app.use(helmet());
