@@ -1,5 +1,6 @@
 const express = require("express");
 const app = express();
+const dotenv = require("dotenv");
 const rateLimit = require("express-rate-limit");
 const helmet = require("helmet");
 const xss = require("xss-clean");
@@ -20,7 +21,7 @@ const limiter = rateLimit({
 app.use("/api/", limiter);
 const cors = require("cors");
 app.use(
-  cors({ origin: ["http://localhost:3001", "https://energia-app.vercel.app/"] })
+  cors({ origin: [process.env.LOCALHOST_URL, process.env.DEPLOYED_URL] })
 );
 app.enable("trust proxy");
 // HELMET
